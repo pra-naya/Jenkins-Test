@@ -23,9 +23,9 @@ pipeline {
                 sh 'npm test'
             }                
         }
-        stage('Start') {
-            steps {
-                sh 'npm start'
-            }                                                                                                                                }  
+        // stage('Start') {
+        //     steps {
+        //         sh 'npm start'
+        //     }                                                                                                                                }  
     }
 }

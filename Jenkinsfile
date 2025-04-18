@@ -1,8 +1,11 @@
 pipeline {
-    //agent {
+    agent {
       //  docker { image 'node:18-alpine' }
-    agent any
-    //}
+        node {
+            label 'ubuntu'
+        }
+    //agent any
+    }
     stages {
         stage('Install') {
             steps {

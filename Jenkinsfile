@@ -9,7 +9,6 @@ pipeline {
     stages {
         stage('Install') {
             steps {
-		sh 'node -v'
                 sh 'npm install'
             }
         }
@@ -20,12 +19,15 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'npm test'
+                sh 'npm run test'
             }                
         }
-        // stage('Start') {
-        //     steps {
-        //         sh 'npm start'
-        //     }                                                                                                                                }  
+        stage('Tranfer Build Files') {
+            steps {
+                sh '''
+                    scp -P 3022 -r dist package.json package-lock.json ubuntu@172.18.0.1:/home/ubuntu/jenkins-test-deploy
+                    ssh -p 3022 ubuntu@172.18.0.1 'cd /home/ubuntu/jenkins-test-deploy && npm install --omit=dev && node dist/index.js'
+                    '''
+            }                                                                                                                                }  
     }
 }

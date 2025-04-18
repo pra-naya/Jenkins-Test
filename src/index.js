@@ -1,19 +1,19 @@
-const express = require('express');
+import express from 'express';
+
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
-
-app.get('/hello', (req, res) => {
-  res.json({ message: 'Hello, Jenkins!' });
+app.get('/', (_req, res) => {
+  res.send('Hello from Express Build!');
 });
 
-const PORT = process.env.PORT || 3000;
-if (require.main === module) {
-  app.listen(PORT, () => {
+let server;
+
+if (process.env.NODE_ENV !== 'test') {
+  server = app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
 }
 
-module.exports = app;
-
+export { app, server };
 

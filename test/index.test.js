@@ -1,19 +1,25 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const app = require('../src/index');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import { app, server } from '../src/index.js';
 
 const { expect } = chai;
 chai.use(chaiHttp);
 
-describe('GET /hello', () => {
-  it('should return a greeting message', done => {
+describe('GET /', () => {
+  it('should return 200 and a greeting', (done) => {
     chai.request(app)
-      .get('/hello')
+      .get('/')
       .end((err, res) => {
         expect(res).to.have.status(200);
-        expect(res.body).to.have.property('message', 'Hello, Jenkins!');
+        expect(res.text).to.equal('Hello from Express Build!');
         done();
       });
+  });
+
+  after(() => {
+    if (server) {
+      server.close(); // Close the server after tests
+    }
   });
 });
 

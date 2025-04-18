@@ -22,7 +22,7 @@ pipeline {
                 sh 'npm run test'
             }                
         }
-        stage('Tranfer Build Files') {
+        stage('Tranfer and Deploy') {
             steps {
                 sh '''
                     scp -P 3022 -r dist package.json package-lock.json ubuntu@172.18.0.1:/home/ubuntu/jenkins-test-deploy
